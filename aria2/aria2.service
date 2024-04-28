@@ -1,0 +1,19 @@
+#~/.config/systemd/user/aria2c.service
+#PORT from "app-ports free"
+#SECRET from pwgen
+#systemctl --user daemon-reload
+#systemctl --user enable --now aria2c
+
+[Unit]
+Description=aria2c
+After=network-online.target
+
+[Service]
+Type=exec
+Restart=on-failure
+ExecStart=/usr/bin/aria2c --enable-rpc --rpc-listen-port=PORT --rpc-secret SECRET --disable-ipv6
+ExecStop=/bin/kill -s QUIT $MAINPID
+StandardOutput=journal
+
+[Install]
+WantedBy=default.target

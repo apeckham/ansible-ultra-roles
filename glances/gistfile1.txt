@@ -1,0 +1,18 @@
+#~/.config/systemd/user/glances.service
+#PORT from `app-ports free`
+#systemctl --user daemon-reload
+#systemctl --user enable --now glances
+
+[Unit]
+Description=glances
+After=network-online.target
+
+[Service]
+Type=exec
+Restart=on-failure
+ExecStart=%h/.pyenv/shims/glances --webserver --port PORT
+ExecStop=/bin/kill -s QUIT $MAINPID
+StandardOutput=journal
+
+[Install]
+WantedBy=default.target

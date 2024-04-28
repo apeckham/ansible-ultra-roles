@@ -1,0 +1,19 @@
+#~/.config/systemd/user/yt-dlp-webui.service
+#PORT from `app-ports free`
+#PASS from pwgen
+#systemctl --user daemon-reload
+#systemctl --user enable --now yt-dlp-webui
+
+[Unit]
+Description=yt-dlp-webui
+After=network-online.target
+
+[Service]
+Type=exec
+Restart=on-failure
+ExecStart=%h/bin/yt-dlp-webui --out %h/yt-dlp --port PORT -driver %h/.pyenv/shims/yt-dlp -auth -user $USER -pass PASS -host 127.0.0.1
+ExecStop=/bin/kill -s QUIT $MAINPID
+StandardOutput=journal
+
+[Install]
+WantedBy=default.target

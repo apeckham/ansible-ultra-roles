@@ -1,0 +1,16 @@
+[Unit]
+Description=metube
+After=network-online.target
+
+[Service]
+Type=exec
+Restart=on-failure
+ExecStart=%h/.pyenv/shims/pipenv run python app/main.py
+ExecStop=/bin/kill -s TERM $MAINPID
+StandardOutput=journal
+Environment="PORT=999999" # app-ports free
+Environment="DOWNLOAD_DIR=%h/metubes"
+WorkingDirectory=%h/metube-master
+
+[Install]
+WantedBy=default.target
