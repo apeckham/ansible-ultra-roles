@@ -7,6 +7,7 @@
   template:
     src: aria2c.conf
     dest: ~/.apps/nginx/proxy.d/aria2c.conf
+  notify: Restart nginx
 
 - name: Copy www.sh
   template:
@@ -19,3 +20,8 @@
     enabled: yes
     state: started
     user: yes
+- name: Restart nginx
+  command: app-nginx restart
+  when: ansible_facts['os_family'] == 'Debian'
+  become: yes
+  become_user: root
