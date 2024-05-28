@@ -15,37 +15,16 @@
     patterns: "aria-ng-*.min.js"
   register: arian_js_files
 
-- name: Set defaults in AriaNg JS file
+- name: Replace values in AriaNg JS file
   replace:
-    path: "{{ item.path }}"
-    regexp: 'rpcPort:"6800"'
-    replace: 'rpcPort:"443"'
-  with_items: "{{ arian_js_files.files }}"
-
-- name: Set rpcInterface in AriaNg JS file
-  replace:
-    path: "{{ item.path }}"
-    regexp: 'rpcInterface:""'
-    replace: 'rpcInterface:"aria2c/jsonrpc"'
-  with_items: "{{ arian_js_files.files }}"
-
-- name: Set secret in AriaNg JS file
-  replace:
-    path: "{{ item.path }}"
-    regexp: 'secret:""'
-    replace: 'secret:"{{ aria2c_secret }}"'
-  with_items: "{{ arian_js_files.files }}"
-
-- name: Set rpcHost in AriaNg JS file
-  replace:
-    path: "{{ item.path }}"
-    regexp: 'rpcHost:""'
-    replace: 'rpcHost:"{{ aria2c_host }}"'
-  with_items: "{{ arian_js_files.files }}"
-
-- name: Set protocol in AriaNg JS file
-  replace:
-    path: "{{ item.path }}"
-    regexp: 'protocol:""'
-    replace: 'protocol:"https"'
-  with_items: "{{ arian_js_files.files }}"
+    path: "{{ item.0.path }}"
+    regexp: "{{ item.1.regexp }}"
+    replace: "{{ item.1.replace }}"
+  loop: "{{ arian_js_files.files | product(replace_pairs) | list }}"
+  vars:
+    replace_pairs:
+      - { regexp: 'rpcPort:"6800"', replace: 'rpcPort:"443"' }
+      - { regexp: 'rpcInterface:""', replace: 'rpcInterface:"aria2c/jsonrpc"' }
+      - { regexp: 'secret:""', replace: 'secret:"{{ aria2c_secret }}"' }
+      - { regexp: 'rpcHost:""', replace: 'rpcHost:"{{ aria2c_host }}"' }
+      - { regexp: 'protocol:""', replace: 'protocol:"https"' }
