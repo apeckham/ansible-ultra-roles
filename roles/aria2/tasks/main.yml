@@ -6,7 +6,7 @@
     src: aria2.service
     dest: ~/.config/systemd/user/aria2c.service
   notify:
-    - Enable and start aria2c
+    - Enable and restart aria2c
 
 - name: Copy aria2c.conf
   template:
