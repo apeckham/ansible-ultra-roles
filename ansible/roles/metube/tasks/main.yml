@@ -3,19 +3,23 @@
     url: "https://github.com/alexta69/metube/archive/refs/heads/master.zip"
     dest: "/tmp/metube-master.zip"
     mode: '0644'
+  delegate_to: localhost
 
 - name: Unzip metube source
   unarchive:
     src: "/tmp/metube-master.zip"
     dest: "/tmp"
     remote_src: no
+  delegate_to: localhost
 
 - name: Build Angular app locally
   command: >
     docker run -v /tmp/metube-master:/build --entrypoint '' -ti node:lts-alpine sh -c 'cd /build/ui && npm ci && node_modules/.bin/ng build --configuration production'
+  delegate_to: localhost
 
 - name: Remove node_modules and .angular
   command: rm -rf /tmp/metube-master/ui/node_modules /tmp/metube-master/ui/.angular
+  delegate_to: localhost
 
 - name: Copy metube source to remote
   copy:
