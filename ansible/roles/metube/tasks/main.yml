@@ -44,7 +44,7 @@
     chdir: ~/metube-master
 
 - name: Create .htpasswd file
-  command: htpasswd -bc ~/metube-master/.htpasswd {{ ansible_user }} {{ metube_password }}
+  command: htpasswd -bc {{ ansible_env.HOME }}/metube-master/.htpasswd {{ ansible_user }} {{ metube_password }}
 
 - name: Copy metube.conf
   template:
@@ -54,7 +54,7 @@
 - name: Copy metube.service
   template:
     src: metube.service
-    dest: ~/.config/systemd/user/metube.service
+    dest: "{{ ansible_env.HOME }}/.config/systemd/user/metube.service"
 
 - name: Enable and start metube service
   systemd:
