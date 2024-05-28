@@ -25,6 +25,6 @@
     replace_pairs:
       - { regexp: 'rpcPort:"6800"', replace: 'rpcPort:"443"' }
       - { regexp: 'rpcInterface:""', replace: 'rpcInterface:"aria2c/jsonrpc"' }
-      - { regexp: 'secret:""', replace: 'secret:"{{ aria2c_secret }}"' }
+      - { regexp: 'secret:""', replace: 'secret:"{{ aria2c_secret | base64encode }}"' }
       - { regexp: 'rpcHost:""', replace: 'rpcHost:"{{ aria2c_host }}"' }
       - { regexp: 'protocol:""', replace: 'protocol:"https"' }
