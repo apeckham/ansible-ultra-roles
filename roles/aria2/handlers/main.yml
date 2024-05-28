@@ -2,7 +2,7 @@
   command: app-nginx restart
 
 - name: Enable and restart aria2c
-  command: systemctl --user {{ item }} aria2c
-  loop:
-    - enable
-    - restart
+  shell: |
+    systemctl --user daemon-reload &&
+    systemctl --user enable aria2c &&
+    systemctl --user restart aria2c
