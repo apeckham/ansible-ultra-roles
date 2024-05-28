@@ -1,0 +1,8 @@
+- name: Restart nginx
+  command: app-nginx restart
+
+- name: Daemon reload
+  command: systemctl --user daemon-reload
+
+- name: Enable and start metube
+  command: systemctl --user enable --now metube
