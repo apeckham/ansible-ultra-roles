@@ -49,7 +49,7 @@
 - name: Copy metube.conf
   template:
     src: metube.conf
-    dest: /etc/nginx/conf.d/metube.conf
+    dest: "{{ ansible_env.HOME }}/.apps/nginx/proxy.d/metube.conf"
 
 - name: Copy metube.service
   template:
