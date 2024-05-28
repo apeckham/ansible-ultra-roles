@@ -13,15 +13,11 @@
   delegate_to: localhost
 
 - name: Build Angular app locally
-  docker_container:
-    name: build_angular_app
-    image: node:lts-alpine
-    working_dir: /build/ui
-    volumes:
-      - /tmp/metube-master:/build
-    entrypoint: sh -c 'npm ci && node_modules/.bin/ng build --configuration production && rm -rf node_modules .angular'
-    state: started
-    cleanup: yes
+  ansible.builtin.shell:
+    cmd: >
+      docker run --name build_angular_app -w /build/ui -v /tmp/metube-master:/build node:lts-alpine 
+      sh -c 'npm ci && node_modules/.bin/ng build --configuration production && rm -rf node_modules .angular'
+    executable: /bin/bash
   delegate_to: localhost
 
 - name: Copy metube source to remote
