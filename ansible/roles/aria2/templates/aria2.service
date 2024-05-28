@@ -1,9 +1,3 @@
-#~/.config/systemd/user/aria2c.service
-#PORT from "app-ports free"
-#SECRET from pwgen
-#systemctl --user daemon-reload
-#systemctl --user enable --now aria2c
-
 [Unit]
 Description=aria2c
 After=network-online.target
