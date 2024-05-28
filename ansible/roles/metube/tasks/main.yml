@@ -46,7 +46,6 @@
 - name: Create .htpasswd file
   command: htpasswd -bc ~/metube-master/.htpasswd {{ ansible_user }} {{ metube_password }}
 
-
 - name: Copy metube.conf
   template:
     src: metube.conf
@@ -63,4 +62,3 @@
     enabled: yes
     state: started
     user: yes
-
