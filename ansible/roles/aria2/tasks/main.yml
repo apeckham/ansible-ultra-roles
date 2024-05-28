@@ -10,6 +10,8 @@
   notify:
     - Daemon reload
     - Enable and start aria2c
+  vars:
+    aria2c_secret: "{{ lookup('password', '/dev/null length=12 chars=ascii_letters,digits') | b64encode }}"
 
 - name: Copy aria2c.conf
   template:

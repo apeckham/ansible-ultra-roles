@@ -5,7 +5,7 @@ After=network-online.target
 [Service]
 Type=exec
 Restart=on-failure
-ExecStart=/usr/bin/aria2c --enable-rpc --rpc-listen-port={{ aria2c_port }} --rpc-secret SECRET --disable-ipv6
+ExecStart=/usr/bin/aria2c --enable-rpc --rpc-listen-port={{ aria2c_port }} --rpc-secret {{ aria2c_secret }} --disable-ipv6
 ExecStop=/bin/kill -s QUIT $MAINPID
 StandardOutput=journal
 
