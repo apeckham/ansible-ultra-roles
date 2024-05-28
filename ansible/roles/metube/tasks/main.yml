@@ -13,8 +13,14 @@
   delegate_to: localhost
 
 - name: Build Angular app locally
-  command: >
-    docker run -v /tmp/metube-master:/build --entrypoint '' -ti node:lts-alpine sh -c 'cd /build/ui && npm ci && node_modules/.bin/ng build --configuration production'
+  docker_container:
+    name: build_angular_app
+    image: node:lts-alpine
+    volumes:
+      - /tmp/metube-master:/build
+    entrypoint: sh -c 'cd /build/ui && npm ci && node_modules/.bin/ng build --configuration production'
+    state: started
+    cleanup: yes
   delegate_to: localhost
 
 - name: Remove node_modules and .angular
