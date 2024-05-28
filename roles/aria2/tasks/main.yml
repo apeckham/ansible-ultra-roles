@@ -1,3 +1,6 @@
+- name: Include frontend tasks
+  include_tasks: frontend.yml
+
 - name: Copy aria2.service
   template:
     src: aria2.service
