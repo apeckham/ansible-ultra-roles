@@ -8,10 +8,10 @@
     src: metube.service
     dest: ~/.config/systemd/user/metube.service
 
-
 - name: Enable and start metube service
   systemd:
     name: metube
     enabled: yes
     state: started
     user: yes
+
