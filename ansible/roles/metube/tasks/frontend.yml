@@ -1,0 +1,37 @@
+- name: Download metube source
+  get_url:
+    url: "https://github.com/alexta69/metube/archive/refs/heads/master.zip"
+    dest: "/tmp/metube-master.zip"
+    mode: '0644'
+
+- name: Unzip metube source
+  unarchive:
+    src: "/tmp/metube-master.zip"
+    dest: "/tmp"
+    remote_src: no
+
+- name: Build Angular app locally
+  command: >
+    docker run -v /tmp/metube-master:/build --entrypoint '' -ti node:lts-alpine sh -c 'cd /build/ui && npm ci && node_modules/.bin/ng build --configuration production'
+
+- name: Remove node_modules and .angular
+  command: rm -rf /tmp/metube-master/ui/node_modules /tmp/metube-master/ui/.angular
+
+- name: Copy metube source to remote
+  copy:
+    src: /tmp/metube-master
+    dest: ~/metube-master
+    mode: '0755'
+
+- name: Install pipenv
+  pip:
+    name: pipenv
+    executable: pip3
+
+- name: Install dependencies with pipenv
+  command: pipenv install
+  args:
+    chdir: ~/metube-master
+
+- name: Create .htpasswd file
+  command: htpasswd -bc ~/metube-master/.htpasswd {{ ansible_user }} {{ metube_password }}
