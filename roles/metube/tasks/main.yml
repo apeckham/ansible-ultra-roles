@@ -1,30 +1,44 @@
+- name: Create a temporary directory
+  ansible.builtin.tempfile:
+    state: directory
+    path: "{{ playbook_dir }}"
+  register: temp_dir
+  delegate_to: localhost
+
 - name: Download metube source
   get_url:
     url: "https://github.com/alexta69/metube/archive/refs/heads/master.zip"
-    dest: "/tmp/metube-master.zip"
+    dest: "{{ temp_dir.path }}/metube-master.zip"
     mode: '0644'
   delegate_to: localhost
 
 - name: Unzip metube source
   unarchive:
-    src: "/tmp/metube-master.zip"
-    dest: "/tmp"
-    remote_src: no
+    src: "{{ temp_dir.path }}/metube-master.zip"
+    dest: "{{ temp_dir.path }}"
+    remote_src: yes  # Change to 'yes' because the source is already on the remote machine
   delegate_to: localhost
 
 - name: Build Angular app locally
   ansible.builtin.shell:
     cmd: >
-      docker run --name build_angular_app -w /build/ui -v /tmp/metube-master:/build node:lts-alpine 
+      docker run --rm -w /build/ui -v {{ temp_dir.path }}/metube-master:/build node:lts-alpine
       sh -c 'npm ci && node_modules/.bin/ng build --configuration production && rm -rf node_modules .angular'
     executable: /bin/bash
   delegate_to: localhost
 
 - name: Copy metube source to remote
-  copy:
-    src: /tmp/metube-master
-    dest: ~/metube-master
-    mode: '0755'
+  synchronize:
+    src: "{{ temp_dir.path }}/metube-master/"
+    dest: "~/metube-master/"
+    recursive: yes
+  delegate_to: localhost
+
+- name: Remove temporary directory
+  ansible.builtin.file:
+    path: "{{ temp_dir.path }}"
+    state: absent
+  delegate_to: localhost
 
 - name: Install pipenv
   pip:
