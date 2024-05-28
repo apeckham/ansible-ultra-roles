@@ -60,7 +60,7 @@
     dest: ~/.config/systemd/user/metube.service
   notify:
     - Daemon reload
-    - Enable and start aria2c
+    - Enable and start metube
 
 - name: Copy metube.conf
   template:
