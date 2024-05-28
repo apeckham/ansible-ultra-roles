@@ -13,14 +13,14 @@
   find:
     paths: "~/www/ariang/js"
     patterns: "aria-ng-*.min.js"
-  register: ariang_js_files
+  register: js_files
 
 - name: Replace values in AriaNg JS file
   replace:
     path: "{{ item.0.path }}"
     regexp: "{{ item.1.regexp }}"
     replace: "{{ item.1.replace }}"
-  loop: "{{ ariang_js_files.files | product(replace_pairs) | list }}"
+  loop: "{{ js_files.files | product(replace_pairs) | list }}"
   vars:
     replace_pairs:
       - { regexp: 'rpcPort:"6800"', replace: 'rpcPort:"443"' }
