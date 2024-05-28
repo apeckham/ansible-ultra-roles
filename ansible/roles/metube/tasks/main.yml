@@ -24,7 +24,6 @@
     cleanup: yes
   delegate_to: localhost
 
-
 - name: Copy metube source to remote
   copy:
     src: /tmp/metube-master
