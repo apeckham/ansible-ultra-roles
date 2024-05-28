@@ -9,7 +9,7 @@ ExecStart=%h/.pyenv/shims/pipenv run python app/main.py
 ExecStop=/bin/kill -s TERM $MAINPID
 StandardOutput=journal
 Environment="PORT={{ metube_port }}"
-Environment="DOWNLOAD_DIR=%h/metubes"
+Environment="DOWNLOAD_DIR={{ metube_download_dir }}"
 WorkingDirectory=%h/metube-master
 
 [Install]
