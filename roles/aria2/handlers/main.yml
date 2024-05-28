@@ -1,8 +1,10 @@
 - name: Restart nginx
   command: app-nginx restart
 
-- name: Daemon reload
-  command: systemctl --user daemon-reload
-
-- name: Enable and start aria2c
-  command: systemctl --user enable --now aria2c
+- name: Enable and restart aria2c
+  systemd:
+    name: aria2c
+    state: restarted
+    enabled: yes
+    daemon_reload: yes
+    user: yes

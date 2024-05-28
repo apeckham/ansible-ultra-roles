@@ -59,7 +59,6 @@
     src: metube.service
     dest: ~/.config/systemd/user/metube.service
   notify:
-    - Daemon reload
     - Enable and start metube
 
 - name: Copy metube.conf

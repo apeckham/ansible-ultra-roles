@@ -3,7 +3,6 @@
     src: aria2.service
     dest: ~/.config/systemd/user/aria2c.service
   notify:
-    - Daemon reload
     - Enable and start aria2c
 
 - name: Copy aria2c.conf
