@@ -2,9 +2,7 @@
   command: app-nginx restart
 
 - name: Enable and restart metube
-  systemd:
-    name: metube
-    state: restarted
-    enabled: yes
-    daemon_reload: yes
-    user: yes
+  command: systemctl --user {{ item }} metube
+  loop:
+    - enable
+    - restart
