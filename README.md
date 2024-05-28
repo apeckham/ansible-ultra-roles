@@ -1,2 +1,2 @@
 # ultra-installers
-Installation notes for ultra.cc custom apps
+Ansible files for ultra.cc custom apps
