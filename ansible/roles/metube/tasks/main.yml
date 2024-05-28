@@ -1,0 +1,21 @@
+- name: Copy metube.conf
+  template:
+    src: metube.conf
+    dest: /etc/nginx/conf.d/metube.conf
+
+- name: Copy metube.service
+  template:
+    src: metube.service
+    dest: ~/.config/systemd/user/metube.service
+
+- name: Copy metube.txt
+  template:
+    src: metube.txt
+    dest: ~/metube/metube.txt
+
+- name: Enable and start metube service
+  systemd:
+    name: metube
+    enabled: yes
+    state: started
+    user: yes

@@ -1,0 +1,21 @@
+- name: Copy aria2.service
+  template:
+    src: aria2.service
+    dest: ~/.config/systemd/user/aria2c.service
+
+- name: Copy aria2c.conf
+  template:
+    src: aria2c.conf
+    dest: ~/.apps/nginx/proxy.d/aria2c.conf
+
+- name: Copy www.sh
+  template:
+    src: www.sh
+    dest: ~/aria2/www.sh
+
+- name: Enable and start aria2c service
+  systemd:
+    name: aria2c
+    enabled: yes
+    state: started
+    user: yes

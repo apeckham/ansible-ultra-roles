@@ -1,0 +1,21 @@
+- name: Copy yt-dlp-webui.service
+  template:
+    src: yt-dlp-webui.service
+    dest: ~/.config/systemd/user/yt-dlp-webui.service
+
+- name: Copy yt-dlp-webui.conf
+  template:
+    src: yt-dlp-webui.conf
+    dest: ~/.apps/nginx/proxy.d/yt-dlp-webui.conf
+
+- name: Copy install.sh
+  template:
+    src: install.sh
+    dest: ~/yt-dlp-webui/install.sh
+
+- name: Enable and start yt-dlp-webui service
+  systemd:
+    name: yt-dlp-webui
+    enabled: yes
+    state: started
+    user: yes

@@ -1,0 +1,21 @@
+- name: Copy glances.service
+  template:
+    src: gistfile1.txt
+    dest: ~/.config/systemd/user/glances.service
+
+- name: Copy glances.txt
+  template:
+    src: glances.txt
+    dest: ~/glances/glances.txt
+
+- name: Copy nginx.conf
+  template:
+    src: nginx.conf
+    dest: ~/.apps/nginx/proxy.d/glances.conf
+
+- name: Enable and start glances service
+  systemd:
+    name: glances
+    enabled: yes
+    state: started
+    user: yes
