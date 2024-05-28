@@ -16,9 +16,10 @@
   docker_container:
     name: build_angular_app
     image: node:lts-alpine
+    working_dir: /build/ui
     volumes:
       - /tmp/metube-master:/build
-    entrypoint: sh -c 'cd /build/ui && npm ci && node_modules/.bin/ng build --configuration production'
+    entrypoint: sh -c 'npm ci && node_modules/.bin/ng build --configuration production'
     state: started
     cleanup: yes
   delegate_to: localhost
