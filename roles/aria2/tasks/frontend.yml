@@ -23,8 +23,7 @@
   loop: "{{ js_files.files | product(replace_pairs) | list }}"
   vars:
     replace_pairs:
-      - { regexp: 'rpcPort:"6800"', replace: 'rpcPort:"443"' }
-      - { regexp: 'rpcInterface:""', replace: 'rpcInterface:"aria2c/jsonrpc"' }
-      - { regexp: 'secret:""', replace: 'secret:"{{ aria2c_secret | b64encode }}"' }
-      - { regexp: 'rpcHost:""', replace: 'rpcHost:"{{ aria2c_host }}"' }
-      - { regexp: 'protocol:""', replace: 'protocol:"https"' }
+      - { regexp: 'rpcInterface:".*?"', replace: 'rpcInterface:"aria2c/jsonrpc"' }
+      - { regexp: 'secret:".*?"', replace: 'secret:"{{ aria2c_secret | b64encode }}"' }
+      - { regexp: 'rpcHost:".*?"', replace: 'rpcHost:"{{ aria2c_host }}"' }
+      - { regexp: 'protocol:".*?"', replace: 'protocol:"https"' }
