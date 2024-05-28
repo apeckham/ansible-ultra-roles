@@ -1,17 +1,17 @@
 - name: Download AriaNg
   get_url:
     url: "https://github.com/mayswind/AriaNg/releases/download/1.3.7/AriaNg-1.3.7.zip"
-    dest: "~/aria2/AriaNg-1.3.7.zip"
+    dest: "~/AriaNg-1.3.7.zip"
 
 - name: Unzip AriaNg
   unarchive:
-    src: "~/aria2/AriaNg-1.3.7.zip"
-    dest: "~/aria2/www"
+    src: "~/AriaNg-1.3.7.zip"
+    dest: "~/www/ariang"
     remote_src: yes
 
 - name: Find the AriaNg JS file
   find:
-    paths: "~/aria2/www/ariang/js"
+    paths: "~/www/ariang/js"
     patterns: "aria-ng-*.min.js"
   register: ariang_js_files
 
