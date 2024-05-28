@@ -33,7 +33,6 @@
 - name: Install pipenv
   pip:
     name: pipenv
-    executable: pip3
 
 - name: Install dependencies with pipenv
   command: pipenv install
@@ -43,19 +42,26 @@
 - name: Create .htpasswd file
   command: htpasswd -bc {{ ansible_env.HOME }}/metube-master/.htpasswd {{ ansible_user }} {{ metube_password }}
 
-- name: Copy metube.conf
-  template:
-    src: metube.conf
-    dest: "{{ ansible_env.HOME }}/.apps/nginx/proxy.d/metube.conf"
-
 - name: Copy metube.service
   template:
     src: metube.service
-    dest: "{{ ansible_env.HOME }}/.config/systemd/user/metube.service"
+    dest: ~/.config/systemd/user/metube.service
+  notify:
+    - Daemon reload
+    - Enable and start aria2c
 
-- name: Enable and start metube service
-  systemd:
-    name: metube
-    enabled: yes
-    state: started
-    user: yes
+- name: Copy metube.conf
+  template:
+    src: metube.conf
+    dest: ~/.apps/nginx/proxy.d/metube.conf
+  notify:
+    - Restart nginx
+
+- name: Restart nginx
+  command: app-nginx restart
+
+- name: Daemon reload
+  command: systemctl --user daemon-reload
+
+- name: Enable and start metube
+  command: systemctl --user enable --now metube
