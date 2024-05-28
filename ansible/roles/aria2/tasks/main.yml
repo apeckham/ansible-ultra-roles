@@ -2,11 +2,6 @@
   template:
     src: aria2.service
     dest: ~/.config/systemd/user/aria2c.service
-
-- name: Copy aria2.service
-  template:
-    src: aria2.service
-    dest: ~/.config/systemd/user/aria2c.service
   notify:
     - Daemon reload
     - Enable and start aria2c
@@ -18,25 +13,11 @@
   notify:
     - Restart nginx
 
-- name: Enable and start aria2c service
-  systemd:
-    name: aria2c
-    enabled: yes
-    state: started
-    user: yes
-
 - name: Restart nginx
   command: app-nginx restart
-  when: ansible_facts['os_family'] == 'Debian'
-  become: yes
-  become_user: root
 
 - name: Daemon reload
   command: systemctl --user daemon-reload
-  become: yes
-  become_user: root
 
 - name: Enable and start aria2c
   command: systemctl --user enable --now aria2c
-  become: yes
-  become_user: root
