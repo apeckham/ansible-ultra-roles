@@ -19,14 +19,11 @@
     working_dir: /build/ui
     volumes:
       - /tmp/metube-master:/build
-    entrypoint: sh -c 'npm ci && node_modules/.bin/ng build --configuration production'
+    entrypoint: sh -c 'npm ci && node_modules/.bin/ng build --configuration production && rm -rf node_modules .angular'
     state: started
     cleanup: yes
   delegate_to: localhost
 
-- name: Remove node_modules and .angular
-  command: rm -rf /tmp/metube-master/ui/node_modules /tmp/metube-master/ui/.angular
-  delegate_to: localhost
 
 - name: Copy metube source to remote
   copy:
