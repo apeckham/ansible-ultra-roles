@@ -1,2 +1,0 @@
-pip install --user 'glances[web]'
-glances -w --port 9999 # app-ports free
