@@ -4,7 +4,6 @@ After=network.target
 
 [Service]
 ExecStart=~/ersatztv/ErsatzTV
-User=your_user
 Restart=always
 
 [Install]
