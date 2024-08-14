@@ -3,7 +3,7 @@ Description=ErsatzTV Service
 After=network.target
 
 [Service]
-ExecStart=/your/preferred/install/location/ersatztv/ErsatzTV
+ExecStart=~/ersatztv/ErsatzTV
 User=your_user
 Restart=always
 
