@@ -1,6 +1,9 @@
 ---
-- name: Restart ErsatzTV
-  command: systemctl --user restart ersatztv
+- name: Restart nginx
+  command: app-nginx restart
 
-- name: Restart Nginx
-  command: systemctl restart nginx
+- name: Enable and restart ersatztv
+  shell: |
+    systemctl --user daemon-reload &&
+    systemctl --user enable ersatztv &&
+    systemctl --user restart ersatztv
