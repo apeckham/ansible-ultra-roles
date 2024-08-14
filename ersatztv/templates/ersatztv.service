@@ -1,0 +1,11 @@
+[Unit]
+Description=ErsatzTV Service
+After=network.target
+
+[Service]
+ExecStart=/your/preferred/install/location/ersatztv/ErsatzTV
+User=your_user
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
