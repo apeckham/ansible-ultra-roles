@@ -15,23 +15,16 @@
     dest: ~/ersatztv
     remote_src: yes
 
-- name: Restart ErsatzTV service
-  command: systemctl --user restart ersatztv
-  notify: Restart ErsatzTV
-
-- name: Ensure ErsatzTV service is enabled and started
-  systemd:
-    name: ersatztv
-    state: started
-    enabled: yes
-
-- name: Ensure Nginx configuration directory exists
-  file:
-    path: /etc/nginx/conf.d
-    state: directory
-
-- name: Deploy ErsatzTV Nginx configuration
+- name: Copy ersatztv.service
   template:
-    src: ersatztv_nginx.conf.j2
-    dest: /etc/nginx/conf.d/ersatztv.conf
-  notify: Restart Nginx
+    src: ersatztv.service
+    dest: ~/.config/systemd/user/ersatztv.service
+  notify:
+    - Enable and restart ersatztv
+
+- name: Copy ersatztv.conf
+  template:
+    src: ersatztv.conf
+    dest: ~/.apps/nginx/proxy.d/ersatztv.conf
+  notify:
+    - Restart nginx
