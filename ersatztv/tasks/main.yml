@@ -15,6 +15,9 @@
     dest: ~/ersatztv
     remote_src: yes
 
+- name: Restart ErsatzTV service
+  command: systemctl --user restart ersatztv
+
 - name: Ensure ErsatzTV service is enabled and started
   systemd:
     name: ersatztv
