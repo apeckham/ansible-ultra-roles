@@ -5,6 +5,7 @@ After=network.target
 [Service]
 ExecStart=~/ersatztv/ErsatzTV
 Restart=always
+StandardOutput=journal
 
 [Install]
 WantedBy=multi-user.target
